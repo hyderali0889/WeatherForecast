@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../utils/fetchdata.dart';
 import 'homestyles.dart';
 import 'homewidgets.dart';
 
@@ -12,6 +14,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var theme = HomeStyles();
   var widgets = HomeWidgets();
+  String city = "Lahore";
+  late Future model;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,17 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           Text("Hello", style: theme.headingText()),
-          HomeWidgets().contWidget()
+          HomeWidgets().contWidget(),
+          FutureBuilder(
+              future: FetchData().getdata(city),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    child: Text(snapshot.data["location"]["name"]),
+                  );
+                }
+                return CircularProgressIndicator();
+              })
         ],
       ),
     );
