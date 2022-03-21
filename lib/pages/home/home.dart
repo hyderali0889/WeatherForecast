@@ -14,25 +14,33 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var theme = HomeStyles();
   var widgets = HomeWidgets();
-  String city = "Lahore";
-  late Future model;
+  String city = "Faisalabad";
+  late Future<dynamic> fetched;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    fetched = FetchData().getdata(city);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Text("Hello", style: theme.headingText()),
-          HomeWidgets().contWidget(),
           FutureBuilder(
-              future: FetchData().getdata(city),
+              future: fetched,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).viewPadding.top),
                     child: Text(snapshot.data["location"]["name"]),
                   );
                 }
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               })
         ],
       ),
