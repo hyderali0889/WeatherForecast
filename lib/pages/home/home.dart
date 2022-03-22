@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../utils/fetchdata.dart';
 import 'homestyles.dart';
-import 'homewidgets.dart';
+import 'widgets/FutureCont.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,37 +12,65 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var theme = HomeStyles();
-  var widgets = HomeWidgets();
+
   String city = "Faisalabad";
   late Future<dynamic> fetched;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    fetched = FetchData().getdata(city);
+    fetched = getCityData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      backgroundColor: const Color(0xff1f1f1f),
+      body: ListView(
+        shrinkWrap: true,
         children: [
-          FutureBuilder(
-              future: fetched,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).viewPadding.top),
-                    child: Text(snapshot.data["location"]["name"]),
-                  );
-                }
-                return const CircularProgressIndicator();
-              })
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    prefixIcon:
+                        const Icon(Icons.search_outlined, color: Colors.white),
+                    hintText: "Enter City Name",
+                    hintStyle: const TextStyle(color: Colors.white54),
+                    contentPadding: const EdgeInsets.all(14.0),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 1.0))),
+                onSubmitted: (value) {
+                  setState(() {
+                    city = value;
+                    fetched = getCityData();
+                  });
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FutureBuilder(
+                future: fetched,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return futureCont(context, snapshot);
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+          ),
         ],
       ),
     );
+  }
+
+  Future<dynamic> getCityData() {
+    return FetchData().getdata(context, city);
   }
 }
