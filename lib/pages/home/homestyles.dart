@@ -2,10 +2,11 @@ import 'package:flutter/Material.dart';
 
 class HomeStyles {
   headingText() {
-    return const TextStyle(color: Colors.white, fontSize: 30);
+    return const TextStyle(
+        color: Color(0xffeb5406), fontSize: 25, fontWeight: FontWeight.bold);
   }
 
   primaryText() {
-    return const TextStyle(color: Colors.white54, fontSize: 22);
+    return const TextStyle(color: Colors.white, fontSize: 18);
   }
 }

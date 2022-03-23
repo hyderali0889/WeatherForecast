@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import '../pages/home/home.dart';
 import '../pages/Details/det.dart';
@@ -10,7 +12,13 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  final List<Widget> _childe = [const Home(), const Det()];
+
+  late Future<dynamic> data;
+
+ void onDataChange(Future newData) {
+  setState(() => data = newData);
+}
+  final List<Widget> _childe = [ const Home(), const Det()];
   var select = 0;
 
   PageController pageController = PageController();
@@ -27,6 +35,8 @@ class _NavigationState extends State<Navigation> {
     pageController.dispose();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +46,9 @@ class _NavigationState extends State<Navigation> {
         children: _childe,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xffffffff),
+        backgroundColor: Colors.black,
+        showUnselectedLabels: false,
+
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.red,
         currentIndex: select,
@@ -56,7 +68,7 @@ class _NavigationState extends State<Navigation> {
     setState(() {
       select = index;
     });
-    pageController.jumpToPage(index);
+    pageController.jumpToPage(index  );
   }
 
   void onpagechan(int index) {

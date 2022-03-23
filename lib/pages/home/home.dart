@@ -4,7 +4,9 @@ import 'homestyles.dart';
 import 'widgets/FutureCont.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -26,13 +28,14 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
-        decoration: BoxDecoration(
-            gradient: RadialGradient(colors: [
-          Colors.blue.withOpacity(0.4),
-          Colors.lightBlue.withOpacity(1),
-          Colors.blueAccent.withOpacity(0.9),
-        ], center: const Alignment(-1, -1), radius: 2)),
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/images/home.jpg"),
+                opacity: 0.5)),
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -66,7 +69,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   future: fetched,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
-                      return futureCont(context, snapshot);
+                      return futureCont(snapshot: snapshot);
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }
