@@ -10,7 +10,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   var theme = HomeStyles();
 
   String city = "Faisalabad";
@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: const Color(0xff1f1f1f),
       body: ListView(
@@ -73,4 +74,7 @@ class _HomeState extends State<Home> {
   Future<dynamic> getCityData() {
     return FetchData().getdata(context, city);
   }
+
+  @override
+  bool get wantKeepAlive =>true;
 }

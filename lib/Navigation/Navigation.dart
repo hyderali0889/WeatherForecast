@@ -13,12 +13,28 @@ class _NavigationState extends State<Navigation> {
   final List<Widget> _childe = [const Home(), const Det()];
   var select = 0;
 
+  PageController pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: select,
-        children: <Widget>[..._childe],
+      body: PageView(
+       controller: pageController,
+       onPageChanged: onpagechan,
+        children: _childe,
+        
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xff131313),
@@ -38,6 +54,13 @@ class _NavigationState extends State<Navigation> {
 
   void _onItemTapped(int index) {
     setState(() {
+      select = index;
+    });
+    pageController.jumpToPage(index);
+  }
+
+  void onpagechan(int index){
+setState(() {
       select = index;
     });
   }
