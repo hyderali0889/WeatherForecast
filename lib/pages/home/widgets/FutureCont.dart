@@ -26,7 +26,7 @@ Widget futureCont(context, snapshot) {
         ),
         Container(
           width: MediaQuery.of(context).size.width,
-          height: 230,
+          height: MediaQuery.of(context).size.height * 0.4,
           padding: const EdgeInsets.all(20),
           margin: const EdgeInsets.only(top: 20),
           decoration: BoxDecoration(
@@ -40,12 +40,16 @@ Widget futureCont(context, snapshot) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                        "Today's Temp : ${snapshot.data["current"]["temp_c"]} C / ${snapshot.data["current"]["temp_f"]} F ",
-                        style: theme.primaryText()),
-                    Text(
-                        "Condition : ${snapshot.data["current"]["condition"]["text"]}",
-                        style: theme.primaryText()),
+                    Flexible(
+                      child: Text(
+                          "Today's Temp : ${snapshot.data["current"]["temp_c"]} C / ${snapshot.data["current"]["temp_f"]} F ",
+                          style: theme.primaryText()),
+                    ),
+                    Flexible(
+                      child: Text(
+                          "Condition : ${snapshot.data["current"]["condition"]["text"]}",
+                          style: theme.primaryText()),
+                    ),
                   ],
                 ),
               ),
@@ -62,11 +66,16 @@ Widget futureCont(context, snapshot) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Humidity : ${snapshot.data["current"]["humidity"]}",
-                        style: theme.primaryText()),
-                    Text(
-                        "Feels Like : ${snapshot.data["current"]["feelslike_c"]} C / ${snapshot.data["current"]["feelslike_f"]} F ",
-                        style: theme.primaryText()),
+                    Flexible(
+                      child: Text(
+                          "Humidity : ${snapshot.data["current"]["humidity"]}",
+                          style: theme.primaryText()),
+                    ),
+                    Flexible(
+                      child: Text(
+                          "Feels Like : ${snapshot.data["current"]["feelslike_c"]} C / ${snapshot.data["current"]["feelslike_f"]} F ",
+                          style: theme.primaryText()),
+                    ),
                   ],
                 ),
               ),

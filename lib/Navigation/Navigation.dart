@@ -2,27 +2,25 @@ import 'package:flutter/material.dart';
 import '../pages/home/home.dart';
 import '../pages/Details/det.dart';
 
-
 class Navigation extends StatefulWidget {
-  const Navigation({ Key? key }) : super(key: key);
+  const Navigation({Key? key}) : super(key: key);
 
   @override
   State<Navigation> createState() => _NavigationState();
 }
 
 class _NavigationState extends State<Navigation> {
-
-  List childe = [
-    const Home(),
-   const Det()
-  ];
-    var select = 0;
+  final List<Widget> _childe = [const Home(), const Det()];
+  var select = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: childe[select],
-       bottomNavigationBar: BottomNavigationBar(
+      body: IndexedStack(
+        index: select,
+        children: <Widget>[..._childe],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xff131313),
         selectedItemColor: Colors.green,
         currentIndex: select,
@@ -36,11 +34,9 @@ class _NavigationState extends State<Navigation> {
         onTap: _onItemTapped,
       ),
     );
-
-    
   }
 
-   void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
       select = index;
     });
