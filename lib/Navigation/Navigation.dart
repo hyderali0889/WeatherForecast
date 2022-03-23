@@ -31,14 +31,14 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-       controller: pageController,
-       onPageChanged: onpagechan,
+        controller: pageController,
+        onPageChanged: onpagechan,
         children: _childe,
-        
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xff131313),
+        backgroundColor: const Color(0xffffffff),
         selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.red,
         currentIndex: select,
         items: const [
           BottomNavigationBarItem(
@@ -59,8 +59,8 @@ class _NavigationState extends State<Navigation> {
     pageController.jumpToPage(index);
   }
 
-  void onpagechan(int index){
-setState(() {
+  void onpagechan(int index) {
+    setState(() {
       select = index;
     });
   }
