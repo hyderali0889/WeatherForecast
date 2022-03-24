@@ -4,8 +4,10 @@ import 'homestyles.dart';
 import 'widgets/FutureCont.dart';
 
 class Home extends StatefulWidget {
+  final Future<dynamic> Data;
+  final Function AddCity;
   const Home({
-    Key? key,
+    Key? key, required this.Data, required this.AddCity,
   }) : super(key: key);
 
   @override
@@ -15,14 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   var theme = HomeStyles();
 
-  String city = "Faisalabad";
-  late Future<dynamic> fetched;
 
-  @override
-  void initState() {
-    super.initState();
-    fetched = getCityData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +53,14 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                               color: Colors.white, width: 1.0))),
                   onSubmitted: (value) {
                     setState(() {
-                      city = value;
-                      fetched = getCityData();
+                      widget.AddCity(value);
                     });
                   }),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FutureBuilder(
-                  future: fetched,
+                  future: widget.Data,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       return futureCont(snapshot: snapshot);
@@ -79,10 +73,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         ),
       ),
     );
-  }
-
-  Future<dynamic> getCityData() {
-    return FetchData().getdata(context, city);
   }
 
   @override

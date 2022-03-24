@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../utils/fetchdata.dart';
 import './widgets/detContent.dart';
 
 class Det extends StatefulWidget {
-  const Det({Key? key}) : super(key: key);
+
+  final Future<dynamic> data;
+  const Det({Key? key , required this.data}) : super(key: key);
 
   @override
   State<Det> createState() => _DetState();
 }
 
 class _DetState extends State<Det> {
-  late Future<dynamic> fetched;
-  String city = "Faisalabad";
-
-  Future<dynamic> getCityData() {
-    return FetchData().getdata(context, city);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    fetched = getCityData();
-   
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +22,10 @@ class _DetState extends State<Det> {
                 image: AssetImage("assets/images/details.jpg"),
                 fit: BoxFit.cover)),
         child: FutureBuilder(
-            future: fetched,
+            future:widget.data ,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                
-
-                return const DetContent();
+                return  DetContent(data:snapshot);
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
